@@ -4,6 +4,7 @@
  */
 import { extend } from 'umi-request';
 import { notification } from 'antd';
+import router from 'umi/router'
 
 const codeMessage = {
   200: '服务器成功返回请求的数据。',
@@ -27,6 +28,8 @@ const getTokenHeader = () => {
   const token = localStorage.getItem('iop-auth-token');
   if (token) {
     header['token'] = token;
+  } else {
+    router.push('/login')
   }
   return header;
 };
@@ -62,7 +65,11 @@ const request = async (url, option) => {
   requestOption.headers = header;
   const res = extendRequest(url, requestOption);
   const { data } = await res;
-  return data;
+  if (data.code === 401) {
+    router.push('/login')
+  } else {
+    return data;
+  }
 };
 
 export default request;

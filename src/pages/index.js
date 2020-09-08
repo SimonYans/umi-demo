@@ -1,11 +1,12 @@
-import styles from './index.less';
-import { useState, useEffect } from 'react';
+import { useEffect } from 'react';
 import { connect } from 'dva';
+import styles from './index.less';
 
-function Index(props) {
+const Index = (props) => {
   const { dispatch, userInfo } = props;
   useEffect(() => {
     dispatch({ type: 'index/getUserInfo' });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className={styles.index}>
