@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useToggle } from "ahooks";
 import { connect } from 'dva';
 import { List, Switch, Calendar } from 'antd-mobile';
@@ -7,41 +7,41 @@ import zhCN from 'antd-mobile/lib/calendar/locale/zh_CN';
 import styles from './index.less';
 
 const Index = (props) => {
-  const { dispatch, userInfo } = props;
-  const [ EN, { toggle: setEN } ] = useToggle()
-  const [ show, { toggle: setShow } ] = useToggle()
-  const [ startTime, setStartTime ] = useState(undefined)
-  const [ endTime, setEndTime ] = useState(undefined)
-  const [ config, setConfig ] = useState({})
+  const { dispatch } = props;
+  const [ EN, { toggle: setEN } ] = useToggle();
+  const [ show, { toggle: setShow } ] = useToggle();
+  const [ startTime, setStartTime ] = useState(undefined);
+  const [ endTime, setEndTime ] = useState(undefined);
+  const [ config, setConfig ] = useState({});
   const [ now ] = useState(new Date());
   const changeLanguage = () => {
-    setEN()
-    setConfig({})
-  }
+    setEN();
+    setConfig({});
+  };
   const onConfirm = (startTime, endTime) => {
-    setShow()
-    setStartTime(startTime)
-    setEndTime(endTime)
-  }
+    setShow();
+    setStartTime(startTime);
+    setEndTime(endTime);
+  };
 
   const onCancel = () => {
-    setShow()
-    setStartTime(undefined)
-    setEndTime(undefined)
-  }
+    setShow();
+    setStartTime(undefined);
+    setEndTime(undefined);
+  };
   const renderBtn = (zh, en, config = {}) => {
     config.locale = EN ? enUS : zhCN;
     return (
       <List.Item arrow="horizontal"
                  onClick={() => {
-                   setShow()
-                   setConfig(config)
+                   setShow();
+                   setConfig(config);
                  }}
       >
         {EN ? en : zh}
       </List.Item>
     );
-  }
+  };
   useEffect(() => {
     dispatch({ type: 'home/getUserInfo' });
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -71,7 +71,7 @@ const Index = (props) => {
       />
     </div>
   );
-}
+};
 
 export default connect(state => ({
   userInfo: state.index.userInfo
