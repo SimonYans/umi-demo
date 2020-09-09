@@ -1,29 +1,21 @@
-
+import theme from './theme'
 // ref: https://umijs.org/config/
 export default {
   treeShaking: true,
+  theme: theme,
+  // 将 path: '/' 放在最后，否则无法匹配到其他一级路由
   routes: [
+    {
+      path: '/login',
+      component: '../pages/login'
+    },
     {
       path: '/',
       component: '../layouts/BaseLayout',
       routes: [
-        { path: '/', component: '../pages/index' },
-        {
-          path: '/login',
-          component: '../pages/login'
-        }
+        { path: '/', component: '../pages/home' },
+        { path: '/list', component: '../pages/list' }
       ]
-    },
-    {
-      path: '/login',
-      component: '../layouts/BlankLayout',
-      routes: [
-        {
-          name: 'login',
-          path: '/login',
-          component: '../pages/login'
-        },
-      ],
     },
   ],
   plugins: [
@@ -44,7 +36,7 @@ export default {
           /components\//,
         ],
       },
-    }],
+    }]
   ],
   proxy: {
     '/proxyApi': {
@@ -56,5 +48,5 @@ export default {
         '^/proxyApi': '/'
       }
     },
-  }
+  },
 }

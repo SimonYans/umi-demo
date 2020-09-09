@@ -1,9 +1,9 @@
 import React from 'react';
 
-function BlankLayout(props) {
+function BaseLayout(props) {
   return (
     <>{props.children}</>
   );
 }
 
-export default BlankLayout;
+export default BaseLayout;

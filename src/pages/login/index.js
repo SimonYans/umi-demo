@@ -3,7 +3,7 @@ import { connect } from 'dva';
 import { List, InputItem, Button } from 'antd-mobile'
 import { message } from 'antd'
 import { createForm } from 'rc-form';
-import styles from './login.less';
+import styles from './index.less';
 
 const loginForm = (props) => {
   const { dispatch } = props;

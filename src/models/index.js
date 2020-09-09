@@ -10,7 +10,7 @@ export default {
   effects: {
     *getUserInfo(_, { call, put }) {
       const response = yield call(getUserInfo);
-      console.log('index response', response)
+      console.log('home response', response)
       if (response.code === 0) {
         yield put({
           type: 'saveUserInfo',

@@ -1,7 +1,7 @@
-function BasicLayout(props) {
+function BlankLayout(props) {
   return (
     <>{props.children}</>
   );
 }
 
-export default BasicLayout;
+export default BlankLayout;
