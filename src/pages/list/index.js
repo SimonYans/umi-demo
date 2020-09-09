@@ -4,7 +4,6 @@ import { connect } from 'dva';
 import { getMaintenanceList, getAgencyList } from '@/services/list';
 import { Card } from 'antd-mobile';
 import { Table, Button } from 'antd';
-import styles from './index.less';
 
 async function getList_Agency() {
   return new Promise(resolve => {
@@ -20,12 +19,11 @@ const List = (props) => {
   const { dispatch } = props;
   const { data: agencyData, loading: agencyLoading } = useRequest(getList_Agency);
   const [ isLoading, { toggle, setTrue, setFalse }] = useBoolean(true);
-  let [ pageNo, setPageNo ] = useState(1)
-  const [ pageSize, setPageSize ] = useState(10)
-  const { data, loading, params, refresh } = useRequest(
+  const [ pageNo, setPageNo ] = useState(1);
+  const [ pageSize, setPageSize ] = useState(10);
+  const { data, loading, params, refresh, pagination, tableProps } = useRequest(
     ({ current, pageSize, sorter: s, filters: f }) => {
       const p = { current, pageSize };
-      p.current = pageNo
       if (s?.field && s?.order) {
         p[s.field] = s.order;
       }
@@ -34,7 +32,7 @@ const List = (props) => {
           p[filed] = value;
         });
       }
-      console.log('p', p)
+      console.log('p', p);
       return getList_Maintenance(p);
     },
     {
@@ -53,13 +51,15 @@ const List = (props) => {
       dataIndex: 'carnum'
     },
   ];
-  const changePageSize = (pageSize,current) => {
-    console.log(pageSize, current)
-  }
+  const changePageSize = (current, pageSize) => {
+    setPageNo(1);
+    setPageSize(pageSize);
+    console.log(pageSize, current);
+  };
   const onPageChange = (current) => {
-    pageNo = current
+    setPageNo(current);
     console.log(pageNo)
-  }
+  };
   //对pagination参数进行设置
   const paginationProps = {
     showSizeChanger: true,
@@ -69,8 +69,8 @@ const List = (props) => {
     showTotal: () => `共${data?data.totalCount:0}条`,
     current: pageNo,
     total: data?data.totalCount:0,
-    onShowSizeChange: (current, pageSize) => changePageSize(pageSize,current),
-    onChange: current => onPageChange(current),
+    onShowSizeChange: changePageSize,
+    onChange: onPageChange,
   };
   useEffect(() => {
   }, []);
@@ -100,9 +100,9 @@ const List = (props) => {
         刷新
       </Button>
       <Table
+        {...tableProps}
         columns={columns}
-        dataSource={data?data.data:[]}
-        pagination={paginationProps}
+        pagination={{ ...pagination, showSizeChanger: true, showQuickJumper: true, }}
         rowKey="taskNo"/>
     </div>
   );
