@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useBoolean, useRequest } from "ahooks";
+import React, { useEffect, useState } from 'react';
+import { useRequest } from "ahooks";
 import { connect } from 'dva';
 import { getMaintenanceList, getAgencyList } from '@/services/list';
-import { Card } from 'antd-mobile';
+import { Card, WhiteSpace } from 'antd-mobile';
 import { Table, Button } from 'antd';
 
 async function getList_Agency() {
@@ -15,16 +15,13 @@ async function getList_Maintenance(params) {
     resolve(getMaintenanceList({page: params.current, size: params.pageSize }))
   });
 }
-const List = (props) => {
-  const { dispatch } = props;
+const List = () => {
   const { data: agencyData, loading: agencyLoading } = useRequest(getList_Agency);
-  const [ isLoading, { toggle, setTrue, setFalse }] = useBoolean(true);
-  const [ pageNo, setPageNo ] = useState(1);
-  const [ pageSize, setPageSize ] = useState(10);
-  const { data, loading, params, refresh, pagination, tableProps } = useRequest(
+  const [ pageSize ] = useState(10);
+  const { refresh, pagination, tableProps } = useRequest(
     ({ current, pageSize, sorter: s, filters: f }) => {
       const p = { current, pageSize };
-      if (s?.field && s?.order) {
+      if (s && s.field && s.order) {
         p[s.field] = s.order;
       }
       if (f) {
@@ -32,7 +29,6 @@ const List = (props) => {
           p[filed] = value;
         });
       }
-      console.log('p', p);
       return getList_Maintenance(p);
     },
     {
@@ -40,7 +36,6 @@ const List = (props) => {
       defaultPageSize: pageSize,
     },
   );
-  const { sorter = {}, filters = {} } = params[0] || {};
   const columns = [
     {
       title: '任务编号',
@@ -51,27 +46,6 @@ const List = (props) => {
       dataIndex: 'carnum'
     },
   ];
-  const changePageSize = (current, pageSize) => {
-    setPageNo(1);
-    setPageSize(pageSize);
-    console.log(pageSize, current);
-  };
-  const onPageChange = (current) => {
-    setPageNo(current);
-    console.log(pageNo)
-  };
-  //对pagination参数进行设置
-  const paginationProps = {
-    showSizeChanger: true,
-    showQuickJumper: true,
-    pageSize: pageSize,
-    pageSizeOptions:['10','20','30'],
-    showTotal: () => `共${data?data.totalCount:0}条`,
-    current: pageNo,
-    total: data?data.totalCount:0,
-    onShowSizeChange: changePageSize,
-    onChange: onPageChange,
-  };
   useEffect(() => {
   }, []);
 
@@ -81,7 +55,7 @@ const List = (props) => {
         <p>loading...</p>
       ) : (
         <div>
-          {agencyData?.data?.map((item) => (
+          {agencyData && agencyData.data.map((item) => (
             <Card key={item.id}>
               <Card.Header
                 title={item.agencyName}
@@ -96,6 +70,7 @@ const List = (props) => {
           ))}
         </div>
       )}
+      <WhiteSpace size="lg" />
       <Button onClick={refresh} style={{ marginBottom: 16 }}>
         刷新
       </Button>
@@ -108,5 +83,5 @@ const List = (props) => {
   );
 }
 
-export default connect(state => ({
+export default connect(() => ({
 }))(List);

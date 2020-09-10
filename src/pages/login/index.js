@@ -12,13 +12,10 @@ const loginForm = (props) => {
   const onSubmit = ()=>{
     props.form.validateFields({ force: true }, (error, values) => {
       if (!error) {
-        console.log('login values', values)
         dispatch({
           type: 'login/login',
           payload: { ...values},
         });
-      } else {
-        console.log('Validation failed');
       }
     });
   }
@@ -82,6 +79,6 @@ const loginForm = (props) => {
   );
 }
 
-export default connect(state => ({
+export default connect(() => ({
 
 }))(createForm()(loginForm));

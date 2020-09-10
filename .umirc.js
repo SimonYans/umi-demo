@@ -14,7 +14,8 @@ export default {
       component: '../layouts/BaseLayout',
       routes: [
         { path: '/', component: '../pages/home' },
-        { path: '/list', component: '../pages/list' }
+        { path: '/list', component: '../pages/list' },
+        { path: '/chart', component: '../pages/chart' }
       ]
     },
   ],

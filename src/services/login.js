@@ -2,7 +2,6 @@ import request from '@/untils/request'
 import {authApi} from '@/untils/api-prefix';
 
 export async function login(userInfo) {
-  console.log('userInfo', userInfo);
   return request(authApi('/token/password'), {
     method: 'POST',
     data: userInfo
