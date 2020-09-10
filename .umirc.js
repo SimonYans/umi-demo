@@ -15,7 +15,8 @@ export default {
       routes: [
         { path: '/', component: '../pages/home' },
         { path: '/list', component: '../pages/list' },
-        { path: '/chart', component: '../pages/chart' }
+        { path: '/chart', component: '../pages/chart' },
+        { path: '/listView', component: '../pages/listView' }
       ]
     },
   ],
