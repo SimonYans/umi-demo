@@ -1,15 +1,32 @@
-
-.normal {
-  font-family: Georgia, sans-serif;
-  text-align: center;
+@import "~@/assets/style/variables";
+.mainContainer {
+  padding-bottom: 50px;
 }
+.tabBarContainer{
+  position: fixed;
+  width: 100%;
+  bottom: 0;
+  .indicator, .plan, .vehicle, .indicatorSelected, .planSelected, .vehicleSelected{
+    width: 22px;
+    height: 22px;
+  }
+  .indicator{
+    background: url('../../assets/images/indicator.svg') center center /  21px 21px no-repeat;
+  }
+  .plan{
+    background: url('../../assets/images/plan.svg') center center /  21px 21px no-repeat;
+  }
+  .vehicle{
+    background: url('../../assets/images/vehicle.svg') center center /  21px 21px no-repeat;
+  }
 
-.title {
-  font-size: 2.5rem;
-  font-weight: normal;
-  letter-spacing: -1px;
-  background: darkslateblue;
-  padding: .6em 0;
-  color: white;
-  margin: 0;
+  .indicatorSelected{
+    background: url('../../assets/images/indicatorSelected.svg') center center /  21px 21px no-repeat;
+  }
+  .planSelected{
+    background: url('../../assets/images/planSelected.svg') center center /  21px 21px no-repeat;
+  }
+  .vehicleSelected{
+    background: url('../../assets/images/vehicleSelected.svg') center center /  21px 21px no-repeat;
+  }
 }

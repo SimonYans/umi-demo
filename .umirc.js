@@ -1,4 +1,4 @@
-import theme from './theme'
+import theme from '@/theme'
 // ref: https://umijs.org/config/
 export default {
   treeShaking: true,
@@ -13,9 +13,9 @@ export default {
       path: '/',
       component: '../layouts/BaseLayout',
       routes: [
-        { path: '/', component: '../pages/home' },
+        { path: '/', component: '../pages/chart' },
         { path: '/list', component: '../pages/list' },
-        { path: '/chart', component: '../pages/chart' },
+        { path: '/home', component: '../pages/home' },
         { path: '/listView', component: '../pages/listView' }
       ]
     },
