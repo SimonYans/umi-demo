@@ -10,6 +10,10 @@ export default {
       component: '../pages/login'
     },
     {
+      path: '/video',
+      component: '../pages/video'
+    },
+    {
       path: '/',
       component: '../layouts/BaseLayout',
       routes: [
